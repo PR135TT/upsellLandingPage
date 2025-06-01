@@ -1,32 +1,24 @@
-document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const message = document.getElementById('message');
-  
-  // Replace with your own backend/Supabase/Formspree API if needed
-  try {
-    const res = await fetch('https://api.brevo.com/v3/contacts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // Replace with your Brevo/Formspree API key or remove for test
-        'api-key': 'YOUR_API_KEY_HERE',
-      },
-      body: JSON.stringify({
-        email: email
-      }),
-    });
+const form = document.getElementById('waitlist-form');
+const message = document.getElementById('form-message');
 
-    if (res.ok) {
-      message.textContent = 'Thanks for signing up!';
-      message.style.color = 'green';
-      e.target.reset();
-    } else {
-      message.textContent = 'Something went wrong. Try again.';
-      message.style.color = 'red';
+form.addEventListener('submit', async function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(form);
+  const response = await fetch(form.action, {
+    method: form.method,
+    body: formData,
+    headers: {
+      Accept: 'application/json'
     }
-  } catch (err) {
-    message.textContent = 'Error connecting to server.';
+  });
+
+  if (response.ok) {
+    message.textContent = 'Thanks for signing up!';
+    message.style.color = 'lightgreen';
+    form.reset();
+  } else {
+    message.textContent = 'Something went wrong. Please try again.';
     message.style.color = 'red';
   }
 });
