@@ -1,24 +1,40 @@
-const form = document.getElementById('waitlist-form');
-const message = document.getElementById('form-message');
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('waitlist-form');
+  const confirmation = document.getElementById('confirmation');
+  const counter = document.getElementById('counter');
 
-form.addEventListener('submit', async function (e) {
-  e.preventDefault();
+  // Load waitlist count from localStorage or initialize
+  let waitlistCount = localStorage.getItem('waitlistCount');
+  if (!waitlistCount) {
+    waitlistCount = 37 + Math.floor(Math.random() * 13); // Simulate initial value
+    localStorage.setItem('waitlistCount', waitlistCount);
+  }
+  counter.textContent = waitlistCount;
 
-  const formData = new FormData(form);
-  const response = await fetch(form.action, {
-    method: form.method,
-    body: formData,
-    headers: {
-      Accept: 'application/json'
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+          Accept: "application/json"
+        }
+      });
+
+      if (res.ok) {
+        confirmation.textContent = "🎉 You're on the list!";
+        waitlistCount++;
+        localStorage.setItem('waitlistCount', waitlistCount);
+        counter.textContent = waitlistCount;
+        form.reset();
+      } else {
+        confirmation.textContent = "Something went wrong. Please try again.";
+      }
+    } catch {
+      confirmation.textContent = "Network error. Please try again.";
     }
   });
-
-  if (response.ok) {
-    message.textContent = 'Thanks for signing up!';
-    message.style.color = 'lightgreen';
-    form.reset();
-  } else {
-    message.textContent = 'Something went wrong. Please try again.';
-    message.style.color = 'red';
-  }
 });

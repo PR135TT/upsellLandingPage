@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Upseller – Create Shopify Upsells with Natural Language</title>
+  <title>Upseller Waitlist</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>🚀 Upseller for Shopify</h1>
-    <p>Create powerful upsell rules using just natural language. No code. No complexity.</p>
-  </header>
-  <div class="form-container">
-    <form action="https://formspree.io/f/xwpbedpr" method="POST" id="waitlist-form">
-      <input type="email" name="email" placeholder="Enter your email" required />
-      <button type="submit">Join Waitlist</button>
-    </form>
-    <div class="message" id="form-message"></div>
-  </div>
-  <footer>
-    &copy; 2025 Upseller. All rights reserved.
-  </footer>
+  <main class="container">
+    <section class="hero">
+      <h1>Create Shopify Upsells with Just Words</h1>
+      <p>Use natural language to generate upsell offers in seconds. No coding or manual setup needed.</p>
+
+      <form id="waitlist-form" action="https://formspree.io/f/yourFormID" method="POST">
+        <input type="email" name="email" placeholder="Enter your email" required />
+        <button type="submit">Join Waitlist</button>
+      </form>
+
+      <p id="confirmation"></p>
+
+      <p class="counter">🔔 <span id="counter">0</span> people have joined the waitlist</p>
+    </section>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>
